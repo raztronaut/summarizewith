@@ -89,6 +89,3 @@ out/
 *.temp
 .tmp/
 .temp/
-
-# Ignore main HTML entry
-index.html
