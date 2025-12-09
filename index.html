@@ -170,6 +170,7 @@
       padding: 1.25rem 1.5rem;
       margin-top: 1.25rem;
       overflow-x: auto;
+      overflow-wrap: break-word;
       position: relative;
     }
 
@@ -187,7 +188,8 @@
       font-family: var(--font-mono);
       font-size: 0.8125rem;
       color: var(--text-muted);
-      white-space: pre;
+      white-space: pre-wrap;
+      word-break: break-all;
       line-height: 1.6;
     }
 
@@ -319,6 +321,11 @@
       color: var(--text);
     }
 
+    .install-box button.copied {
+      border-color: #10b981;
+      color: #10b981;
+    }
+
     /* AI Prompt Box */
     .ai-prompt-box {
       background: var(--bg-elevated);
@@ -422,20 +429,26 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--accent);
-      color: var(--bg);
-      border: none;
-      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 0.75rem;
       border-radius: 6px;
-      font-size: 0.8125rem;
-      font-weight: 500;
+      font-size: 0.75rem;
+      font-weight: normal;
       cursor: pointer;
       transition: all 0.2s ease;
       font-family: var(--font-sans);
     }
 
     .ai-prompt-copy-btn:hover {
-      filter: brightness(1.1);
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    .ai-prompt-copy-btn.copied {
+      border-color: #10b981;
+      color: #10b981;
     }
 
     .ai-prompt-copy-btn svg {
@@ -458,6 +471,49 @@
         gap: 1rem;
         text-align: center;
       }
+
+      /* Center widgets on mobile */
+      .demo-widget {
+        display: flex;
+        justify-content: center;
+      }
+
+      .demo-widget .summarize-widget {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .install-box {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .install-box code {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .install-box button {
+        flex-shrink: 0;
+      }
+
+      .ai-prompt-box {
+        margin: 0 auto;
+      }
+
+      /* Prevent code block overflow on mobile */
+      .code-block {
+        overflow-x: visible;
+        padding: 1rem;
+      }
+
+      .code-block code {
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
     }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="b1feda70-fbfa-4053-9501-462a11068346"></script>
@@ -470,7 +526,7 @@
       
       <div class="install-box">
         <code>npm install summarize-with-ai</code>
-        <button onclick="navigator.clipboard.writeText('npm install summarize-with-ai').then(() => { if (window.umami) umami.track('copy_npm_install'); })">Copy</button>
+        <button id="npm-copy-btn" onclick="copyNpmInstall()">Copy</button>
       </div>
     </header>
 
@@ -804,6 +860,27 @@ SummarizeWidget.init({
       onClickService: trackUsage 
     });
 
+    // Copy npm install command
+    function copyNpmInstall() {
+      navigator.clipboard.writeText('npm install summarize-with-ai').then(() => {
+        // Track copy event
+        if (window.umami) {
+          umami.track('copy_npm_install');
+        }
+        
+        const btn = document.getElementById('npm-copy-btn');
+        const originalHTML = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg> Copied!`;
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
     // AI Prompt toggle and copy functions
     function togglePrompt() {
       const box = document.querySelector('.ai-prompt-box');
@@ -830,11 +907,13 @@ SummarizeWidget.init({
         
         const btn = document.querySelector('.ai-prompt-copy-btn');
         const originalHTML = btn.innerHTML;
+        btn.classList.add('copied');
         btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg> Copied!`;
         setTimeout(() => {
           btn.innerHTML = originalHTML;
+          btn.classList.remove('copied');
         }, 2000);
       });
     }
