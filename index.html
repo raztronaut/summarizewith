@@ -465,7 +465,7 @@
       
       <div class="install-box">
         <code>npm install summarize-with-ai</code>
-        <button onclick="navigator.clipboard.writeText('npm install summarize-with-ai')">Copy</button>
+        <button onclick="navigator.clipboard.writeText('npm install summarize-with-ai'); window.umami && umami.track('copy_npm_install');">Copy</button>
       </div>
     </header>
 
@@ -754,19 +754,41 @@ SummarizeWidget.init({
   <!-- Load the widget -->
   <script src="dist/summarize-widget.iife.js"></script>
   <script>
+    // Analytics handler for widget clicks
+    function trackUsage(serviceId, context) {
+      if (window.umami) {
+        umami.track('summarize_click', {
+          service: serviceId,
+          mode: context.mode,
+          usedSelection: context.usedSelection
+        });
+      }
+    }
+
     // Themes
-    SummarizeWidget.init({ target: '#demo-light', theme: 'light' });
-    SummarizeWidget.init({ target: '#demo-dark', theme: 'dark' });
-    SummarizeWidget.init({ target: '#demo-minimal', theme: 'minimal' });
+    SummarizeWidget.init({ target: '#demo-light', theme: 'light', onClickService: trackUsage });
+    SummarizeWidget.init({ target: '#demo-dark', theme: 'dark', onClickService: trackUsage });
+    SummarizeWidget.init({ target: '#demo-minimal', theme: 'minimal', onClickService: trackUsage });
 
     // Compact
-    SummarizeWidget.init({ target: '#demo-compact', theme: 'dark', compact: true });
+    SummarizeWidget.init({ target: '#demo-compact', theme: 'dark', compact: true, onClickService: trackUsage });
 
     // Custom services
-    SummarizeWidget.init({ target: '#demo-custom', theme: 'dark', services: ['chatgpt', 'claude', 'perplexity'] });
+    SummarizeWidget.init({ 
+      target: '#demo-custom', 
+      theme: 'dark', 
+      services: ['chatgpt', 'claude', 'perplexity'],
+      onClickService: trackUsage 
+    });
 
     // Content mode with selection
-    SummarizeWidget.init({ target: '#demo-content', theme: 'dark', mode: 'content', preferSelection: true });
+    SummarizeWidget.init({ 
+      target: '#demo-content', 
+      theme: 'dark', 
+      mode: 'content', 
+      preferSelection: true,
+      onClickService: trackUsage 
+    });
 
     // AI Prompt toggle and copy functions
     function togglePrompt() {
@@ -787,6 +809,11 @@ SummarizeWidget.init({
         .replace(/&gt;/g, '>');
       
       navigator.clipboard.writeText(text).then(() => {
+        // Track copy event
+        if (window.umami) {
+          umami.track('copy_ai_prompt');
+        }
+        
         const btn = document.querySelector('.ai-prompt-copy-btn');
         const originalHTML = btn.innerHTML;
         btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
