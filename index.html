@@ -237,7 +237,20 @@
       </div>
     </section>
 
-    <!-- Demo 4: Custom Services -->
+    <!-- Demo 4: Compact Mode (Icons Only) -->
+    <section class="demo-section">
+      <h2>Compact Mode (Icons Only)</h2>
+      <p>A space-saving design showing only icons. Perfect for sidebars or tight spaces.</p>
+      <div class="demo-widget" id="demo-compact"></div>
+      <div class="code-block">
+        <code>SummarizeWidget.init({
+  target: <span class="string">'#widget'</span>,
+  compact: <span class="string">true</span>
+});</code>
+      </div>
+    </section>
+
+    <!-- Demo 5: Custom Services -->
     <section class="demo-section">
       <h2>Custom Services</h2>
       <p>Show only specific AI services. Great for keeping things focused.</p>
@@ -250,7 +263,7 @@
       </div>
     </section>
 
-    <!-- Demo 5: Content Mode with Selection -->
+    <!-- Demo 6: Content Mode with Selection -->
     <section class="demo-section">
       <h2>Content Mode with Selection</h2>
       <p>Try selecting some text below, then click a button. The selection will be used for summarization!</p>
@@ -269,7 +282,7 @@
       </div>
     </section>
 
-    <!-- Demo 6: Custom Prompt Prefix -->
+    <!-- Demo 7: Custom Prompt Prefix -->
     <section class="demo-section">
       <h2>Custom Prompt Prefix</h2>
       <p>Add context to your summarization requests with a custom prompt prefix.</p>
@@ -282,7 +295,7 @@
       </div>
     </section>
 
-    <!-- Demo 7: Web Component -->
+    <!-- Demo 8: Web Component -->
     <section class="demo-section">
       <h2>Web Component</h2>
       <p>Use as a custom HTML element for maximum simplicity.</p>
@@ -293,6 +306,16 @@
   <span class="attr">services</span>=<span class="string">"chatgpt,claude,gemini"</span>
   <span class="attr">mode</span>=<span class="string">"url"</span>
 <span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
+      </div>
+    </section>
+
+    <!-- Demo 9: Compact Web Component -->
+    <section class="demo-section">
+      <h2>Compact Web Component</h2>
+      <p>Compact mode works with web components too - just add the compact attribute.</p>
+      <summarize-with-ai compact theme="dark"></summarize-with-ai>
+      <div class="code-block">
+        <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">compact</span> <span class="attr">theme</span>=<span class="string">"dark"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
       </div>
     </section>
 
@@ -323,13 +346,19 @@
       theme: 'minimal'
     });
 
-    // Demo 4: Custom services
+    // Demo 4: Compact mode (icons only)
+    SummarizeWidget.init({
+      target: '#demo-compact',
+      compact: true
+    });
+
+    // Demo 5: Custom services
     SummarizeWidget.init({
       target: '#demo-custom',
       services: ['chatgpt', 'claude', 'perplexity']
     });
 
-    // Demo 5: Content mode
+    // Demo 6: Content mode
     SummarizeWidget.init({
       target: '#demo-content',
       mode: 'content',
@@ -337,7 +366,7 @@
       maxChars: 4000
     });
 
-    // Demo 6: Custom prompt prefix
+    // Demo 7: Custom prompt prefix
     SummarizeWidget.init({
       target: '#demo-prompt',
       promptPrefix: 'As a tech enthusiast, summarize the key insights from:'

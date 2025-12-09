@@ -37,6 +37,8 @@ export interface SummarizeWidgetOptions {
   services?: ServiceId[];
   /** Visual theme (default: 'light') */
   theme?: 'light' | 'dark' | 'minimal';
+  /** If true, show only icons without text labels (default: false) */
+  compact?: boolean;
   /** Custom prompt prefix, e.g. "As a health conscious individual..." */
   promptPrefix?: string;
   /** Gemini URL style: 'app' for gemini.google.com, 'search' for google.com/search with AI */
@@ -50,8 +52,9 @@ export interface SummarizeWidgetOptions {
 /**
  * Internal resolved options with defaults applied
  */
-export interface ResolvedOptions extends Required<Omit<SummarizeWidgetOptions, 'target' | 'extractContent' | 'onClickService' | 'promptPrefix'>> {
+export interface ResolvedOptions extends Required<Omit<SummarizeWidgetOptions, 'target' | 'extractContent' | 'onClickService' | 'promptPrefix' | 'compact'>> {
   target: HTMLElement;
+  compact: boolean;
   extractContent?: () => string;
   onClickService?: (serviceId: ServiceId, context: ClickContext) => void;
   promptPrefix?: string;

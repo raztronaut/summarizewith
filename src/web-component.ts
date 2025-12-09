@@ -60,6 +60,7 @@ function parseGeminiStyle(value: string | null): 'app' | 'search' | undefined {
  *   max-chars="4000"
  *   prompt-prefix="As a developer..."
  *   gemini-style="app"
+ *   compact
  * ></summarize-with-ai>
  */
 export class SummarizeWithAIElement extends HTMLElement {
@@ -67,7 +68,7 @@ export class SummarizeWithAIElement extends HTMLElement {
   private _rendered = false;
 
   static get observedAttributes(): string[] {
-    return ['theme', 'mode', 'services', 'prefer-selection', 'max-chars', 'prompt-prefix', 'gemini-style'];
+    return ['theme', 'mode', 'services', 'prefer-selection', 'max-chars', 'prompt-prefix', 'gemini-style', 'compact'];
   }
 
   constructor() {
@@ -126,6 +127,10 @@ export class SummarizeWithAIElement extends HTMLElement {
     const geminiStyle = parseGeminiStyle(this.getAttribute('gemini-style'));
     if (geminiStyle) options.geminiStyle = geminiStyle;
 
+    // Compact is a boolean attribute - presence means true
+    const compact = this.hasAttribute('compact');
+    if (compact) options.compact = true;
+
     return options;
   }
 
@@ -179,6 +184,18 @@ export class SummarizeWithAIElement extends HTMLElement {
       this.setAttribute('services', value);
     } else {
       this.removeAttribute('services');
+    }
+  }
+
+  get compact(): boolean {
+    return this.hasAttribute('compact');
+  }
+
+  set compact(value: boolean) {
+    if (value) {
+      this.setAttribute('compact', '');
+    } else {
+      this.removeAttribute('compact');
     }
   }
 }

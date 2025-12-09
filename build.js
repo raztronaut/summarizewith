@@ -11,6 +11,9 @@ const sharedOptions = {
   minify: true,
   sourcemap: true,
   target: ['es2020'],
+  loader: {
+    '.svg': 'text',
+  },
 };
 
 // Build IIFE for script tag usage

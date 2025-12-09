@@ -14,6 +14,7 @@ A lightweight, zero-dependency widget to summarize web pages with AI services li
 - **Multiple distribution formats** - Script tag, Web Component, or npm package
 - **5 AI services** - ChatGPT, Claude, Perplexity, Gemini, Grok
 - **3 themes** - Light, Dark, Minimal
+- **Compact mode** - Icons-only display for tight spaces
 - **Smart content handling** - URL mode, content mode, selection-first
 - **Fully accessible** - Semantic HTML, ARIA labels, keyboard navigation
 - **Customizable** - CSS variables, custom prompts, service selection
@@ -61,6 +62,7 @@ SummarizeWidget.init({
 |--------|------|---------|-------------|
 | `target` | `string \| HTMLElement` | Required | CSS selector or element to render into |
 | `theme` | `'light' \| 'dark' \| 'minimal'` | `'light'` | Visual theme |
+| `compact` | `boolean` | `false` | Show icons only (no text labels) |
 | `mode` | `'url' \| 'content'` | `'url'` | Send page URL or extracted content |
 | `services` | `ServiceId[]` | All services | Which AI services to show |
 | `preferSelection` | `boolean` | `true` | Use selected text if available |
@@ -81,6 +83,7 @@ SummarizeWidget.init({
   max-chars="4000"
   prompt-prefix="As a developer..."
   gemini-style="app"
+  compact
 ></summarize-with-ai>
 ```
 
@@ -119,6 +122,15 @@ summarize-with-ai {
 ```
 
 ## Examples
+
+### Compact Mode (Icons Only)
+
+```js
+SummarizeWidget.init({
+  target: '#widget',
+  compact: true
+});
+```
 
 ### Custom Services
 
