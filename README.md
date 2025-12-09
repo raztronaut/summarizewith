@@ -192,6 +192,20 @@ npm run dev
 npm run typecheck
 ```
 
+## Inspiration
+
+I was inspired to create this by seeing similar features on these websites:
+
+### Fluency
+[usefluency.com](https://usefluency.com) - Seen on their blogs (example from [The New Control Layer](https://usefluency.com/blog/the-new-control-layer)):
+
+![Fluency Example](assets/fluency.png)
+
+### Superpower Health
+[superpower.com](https://superpower.com/) - Seen on their website in the footer:
+
+![Superpower Health Example](assets/superpower.png)
+
 ## License
 
 MIT

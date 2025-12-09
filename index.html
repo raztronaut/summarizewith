@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summarize With AI - Demo</title>
+  <title>Summarize With AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --page-bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --accent: #3b82f6;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --page-bg: #0f172a;
-        --card-bg: #1e293b;
-        --text: #f1f5f9;
-        --text-muted: #94a3b8;
-        --border: #334155;
-      }
+      --bg: #0a0a0a;
+      --bg-elevated: #111111;
+      --bg-code: #0d0d0d;
+      --text: #e5e5e5;
+      --text-muted: #737373;
+      --text-faint: #525252;
+      --accent: #2dd4bf;
+      --accent-dim: rgba(45, 212, 191, 0.15);
+      --border: #1a1a1a;
+      --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
     }
 
     * {
@@ -30,137 +29,159 @@
       padding: 0;
     }
 
+    ::selection {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--page-bg);
+      font-family: var(--font-sans);
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.7;
       min-height: 100vh;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      font-size: 0.875rem;
+      color: var(--text-muted);
     }
 
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    nav a svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 6rem;
+    }
+
+    /* Hero */
     header {
-      text-align: center;
-      margin-bottom: 3rem;
+      padding: 0rem 0 2rem;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .label::after {
+      content: '';
+      height: 1px;
+      width: 60px;
+      background: var(--text-faint);
     }
 
     h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
     }
 
     .subtitle {
       color: var(--text-muted);
-      font-size: 1.125rem;
+      font-size: 1.0625rem;
+      max-width: 540px;
+      line-height: 1.6;
     }
 
-    .demo-section {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
+    /* Sections */
+    section {
+      margin-bottom: 4rem;
     }
 
-    .demo-section h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    section h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      color: var(--text);
     }
 
-    .demo-section h2::before {
-      content: '';
-      width: 4px;
-      height: 1.25rem;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    .demo-section p {
+    section > p {
       color: var(--text-muted);
-      font-size: 0.875rem;
+      font-size: 0.9375rem;
       margin-bottom: 1.5rem;
     }
 
     .demo-widget {
-      margin-top: 1rem;
+      margin: 1.5rem 0;
     }
 
+    /* Code blocks */
     .code-block {
-      background: #1e293b;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 1rem;
-      margin-top: 1rem;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.25rem;
       overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
     }
 
     .code-block code {
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-family: var(--font-mono);
       font-size: 0.8125rem;
-      color: #e2e8f0;
-      white-space: pre;
-    }
-
-    .code-block .comment {
-      color: #64748b;
-    }
-
-    .code-block .tag {
-      color: #f472b6;
-    }
-
-    .code-block .attr {
-      color: #7dd3fc;
-    }
-
-    .code-block .string {
-      color: #86efac;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
-    }
-
-    .tab {
-      padding: 0.5rem 1rem;
-      border: none;
-      background: none;
       color: var(--text-muted);
-      font-size: 0.875rem;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.15s ease;
+      white-space: pre;
+      line-height: 1.6;
     }
 
-    .tab:hover {
-      background: var(--border);
-      color: var(--text);
-    }
+    .code-block .comment { color: #404040; }
+    .code-block .tag { color: var(--accent); }
+    .code-block .attr { color: #a78bfa; }
+    .code-block .string { color: #fbbf24; }
+    .code-block .keyword { color: var(--accent); }
 
-    .tab.active {
-      background: var(--accent);
-      color: white;
-    }
-
+    /* Sample content box */
     .sample-content {
-      background: var(--page-bg);
+      background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1.5rem;
@@ -168,209 +189,279 @@
     }
 
     .sample-content h3 {
+      font-family: var(--font-serif);
       font-size: 1rem;
+      font-weight: 500;
       margin-bottom: 0.75rem;
+      color: var(--text);
     }
 
     .sample-content p {
       font-size: 0.875rem;
+      color: var(--text-muted);
       margin-bottom: 0;
     }
 
+    /* Divider */
+    hr {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 4rem 0;
+    }
+
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-muted);
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 0.875rem;
+      color: var(--text-faint);
     }
 
     footer a {
-      color: var(--accent);
+      color: var(--text-muted);
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      transition: color 0.2s ease;
     }
 
     footer a:hover {
-      text-decoration: underline;
+      color: var(--accent);
+    }
+
+    footer a svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Accent link style */
+    .accent-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .accent-link:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    /* Quick install box */
+    .install-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .install-box code {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .install-box button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .install-box button:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 1rem 4rem;
+      }
+
+      header {
+        padding: 2rem 0 3rem;
+      }
+
+      nav {
+        padding: 1.5rem 0;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <nav>
+      <a href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Go Back
+      </a>
+      <a href="https://github.com" target="_blank" rel="noopener">
+        GitHub
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </nav>
+
     <header>
-      <h1>Summarize With AI</h1>
-      <p class="subtitle">A lightweight, embeddable widget for summarizing pages with AI</p>
+      <h1>Summarize any page<br>with AI</h1>
+      <p class="subtitle">A lightweight, embeddable, and open-source widget that lets users summarize web content with ChatGPT, Claude, Perplexity, and more.</p>
+      
+      <div class="install-box">
+        <code>npm install summarize-with-ai</code>
+        <button onclick="navigator.clipboard.writeText('npm install summarize-with-ai')">Copy</button>
+      </div>
     </header>
 
-    <!-- Demo 1: Light Theme (Default) -->
-    <section class="demo-section">
-      <h2>Light Theme (Default)</h2>
-      <p>The default appearance with all AI services. Click any button to summarize this page.</p>
-      <div class="demo-widget" id="demo-light"></div>
-      <div class="code-block">
-        <code><span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="string">"summarize-widget"</span><span class="tag">&gt;&lt;/div&gt;</span>
-<span class="tag">&lt;script&gt;</span>
-  SummarizeWidget.init({
-    target: <span class="string">'#summarize-widget'</span>,
-    theme: <span class="string">'light'</span>
-  });
-<span class="tag">&lt;/script&gt;</span></code>
-      </div>
-    </section>
-
-    <!-- Demo 2: Dark Theme -->
-    <section class="demo-section">
-      <h2>Dark Theme</h2>
-      <p>Perfect for dark mode websites. Uses inverted colors for better contrast.</p>
-      <div class="demo-widget" id="demo-dark"></div>
+    <!-- Quick Start -->
+    <section>
+      <h2>Quick Start</h2>
+      <p>Drop in a single line of HTML. That's it.</p>
+      <summarize-with-ai theme="dark" services="chatgpt,claude,perplexity" mode="url"></summarize-with-ai>
       <div class="code-block">
         <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">theme</span>=<span class="string">"dark"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
       </div>
     </section>
 
-    <!-- Demo 3: Minimal Theme -->
-    <section class="demo-section">
-      <h2>Minimal Theme</h2>
-      <p>A subtle, borderless design that blends into any page without the header.</p>
+    <hr>
+
+    <!-- Themes -->
+    <section>
+      <h2>Themes</h2>
+      <p>Three built-in themes that adapt to your site.</p>
+      
+      <h3 style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; margin: 2rem 0 1rem;">Light</h3>
+      <div class="demo-widget" id="demo-light"></div>
+      
+      <h3 style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; margin: 2rem 0 1rem;">Dark</h3>
+      <div class="demo-widget" id="demo-dark"></div>
+      
+      <h3 style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; margin: 2rem 0 1rem;">Minimal</h3>
       <div class="demo-widget" id="demo-minimal"></div>
-      <div class="code-block">
-        <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">theme</span>=<span class="string">"minimal"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
-      </div>
     </section>
 
-    <!-- Demo 4: Compact Mode (Icons Only) -->
-    <section class="demo-section">
-      <h2>Compact Mode (Icons Only)</h2>
-      <p>A space-saving design showing only icons. Perfect for sidebars or tight spaces.</p>
+    <hr>
+
+    <!-- Compact Mode -->
+    <section>
+      <h2>Compact Mode</h2>
+      <p>Icons only. Perfect for sidebars or tight spaces.</p>
       <div class="demo-widget" id="demo-compact"></div>
       <div class="code-block">
         <code>SummarizeWidget.init({
   target: <span class="string">'#widget'</span>,
-  compact: <span class="string">true</span>
+  compact: <span class="keyword">true</span>
 });</code>
       </div>
     </section>
 
-    <!-- Demo 5: Custom Services -->
-    <section class="demo-section">
-      <h2>Custom Services</h2>
-      <p>Show only specific AI services. Great for keeping things focused.</p>
+    <hr>
+
+    <!-- Custom Services -->
+    <section>
+      <h2>Choose Your Services</h2>
+      <p>Show only the AI services you want.</p>
       <div class="demo-widget" id="demo-custom"></div>
       <div class="code-block">
         <code>SummarizeWidget.init({
-  target: <span class="string">'#widget'</span>,
   services: [<span class="string">'chatgpt'</span>, <span class="string">'claude'</span>, <span class="string">'perplexity'</span>]
 });</code>
       </div>
     </section>
 
-    <!-- Demo 6: Content Mode with Selection -->
-    <section class="demo-section">
-      <h2>Content Mode with Selection</h2>
-      <p>Try selecting some text below, then click a button. The selection will be used for summarization!</p>
+    <hr>
+
+    <!-- Content Mode -->
+    <section>
+      <h2>Selection Mode</h2>
+      <p>Select text, then summarize just that portion.</p>
       <div class="sample-content">
-        <h3>Sample Article Content</h3>
-        <p>Artificial intelligence has transformed how we interact with technology. From voice assistants to recommendation systems, AI is now embedded in our daily lives. Machine learning algorithms can analyze vast amounts of data to find patterns that humans might miss. Natural language processing enables computers to understand and generate human language with increasing sophistication. As these technologies continue to evolve, they promise to revolutionize fields from healthcare to education, making previously impossible tasks routine.</p>
+        <h3>Try selecting this text</h3>
+        <p>Artificial intelligence has transformed how we interact with technology. From voice assistants to recommendation systems, AI is now embedded in our daily lives. Machine learning algorithms can analyze vast amounts of data to find patterns that humans might miss.</p>
       </div>
       <div class="demo-widget" id="demo-content"></div>
       <div class="code-block">
         <code>SummarizeWidget.init({
-  target: <span class="string">'#widget'</span>,
   mode: <span class="string">'content'</span>,
-  preferSelection: <span class="string">true</span>,
-  maxChars: <span class="string">4000</span>
+  preferSelection: <span class="keyword">true</span>
 });</code>
       </div>
     </section>
 
-    <!-- Demo 7: Custom Prompt Prefix -->
-    <section class="demo-section">
-      <h2>Custom Prompt Prefix</h2>
-      <p>Add context to your summarization requests with a custom prompt prefix.</p>
-      <div class="demo-widget" id="demo-prompt"></div>
-      <div class="code-block">
-        <code>SummarizeWidget.init({
-  target: <span class="string">'#widget'</span>,
-  promptPrefix: <span class="string">'As a tech enthusiast, summarize the key insights from:'</span>
-});</code>
-      </div>
-    </section>
+    <hr>
 
-    <!-- Demo 8: Web Component -->
-    <section class="demo-section">
-      <h2>Web Component</h2>
-      <p>Use as a custom HTML element for maximum simplicity.</p>
-      <summarize-with-ai theme="light" services="chatgpt,claude,gemini" mode="url"></summarize-with-ai>
+    <!-- Web Component -->
+    <section>
+      <h2>Works Everywhere</h2>
+      <p>Use as a Web Component or initialize with JavaScript.</p>
       <div class="code-block">
-        <code><span class="tag">&lt;summarize-with-ai</span>
-  <span class="attr">theme</span>=<span class="string">"light"</span>
-  <span class="attr">services</span>=<span class="string">"chatgpt,claude,gemini"</span>
+        <code><span class="comment">// Web Component</span>
+<span class="tag">&lt;summarize-with-ai</span>
+  <span class="attr">theme</span>=<span class="string">"dark"</span>
+  <span class="attr">services</span>=<span class="string">"chatgpt,claude"</span>
   <span class="attr">mode</span>=<span class="string">"url"</span>
-<span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
-      </div>
-    </section>
+<span class="tag">&gt;&lt;/summarize-with-ai&gt;</span>
 
-    <!-- Demo 9: Compact Web Component -->
-    <section class="demo-section">
-      <h2>Compact Web Component</h2>
-      <p>Compact mode works with web components too - just add the compact attribute.</p>
-      <summarize-with-ai compact theme="dark"></summarize-with-ai>
-      <div class="code-block">
-        <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">compact</span> <span class="attr">theme</span>=<span class="string">"dark"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
+<span class="comment">// JavaScript API</span>
+SummarizeWidget.init({
+  target: <span class="string">'#widget'</span>,
+  theme: <span class="string">'dark'</span>,
+  services: [<span class="string">'chatgpt'</span>, <span class="string">'claude'</span>],
+  onService: (ctx) => console.log(ctx)
+});</code>
       </div>
     </section>
 
     <footer>
-      <p>Built with ❤️ for the AI community</p>
-      <p><a href="https://github.com">View on GitHub</a></p>
+      <span>MIT License</span>
+      <a href="https://github.com" target="_blank" rel="noopener">
+        View source
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
     </footer>
   </div>
 
   <!-- Load the widget -->
   <script src="dist/summarize-widget.iife.js"></script>
   <script>
-    // Demo 1: Light theme (default)
-    SummarizeWidget.init({
-      target: '#demo-light',
-      theme: 'light'
-    });
+    // Themes
+    SummarizeWidget.init({ target: '#demo-light', theme: 'light' });
+    SummarizeWidget.init({ target: '#demo-dark', theme: 'dark' });
+    SummarizeWidget.init({ target: '#demo-minimal', theme: 'minimal' });
 
-    // Demo 2: Dark theme
-    SummarizeWidget.init({
-      target: '#demo-dark',
-      theme: 'dark'
-    });
+    // Compact
+    SummarizeWidget.init({ target: '#demo-compact', theme: 'dark', compact: true });
 
-    // Demo 3: Minimal theme
-    SummarizeWidget.init({
-      target: '#demo-minimal',
-      theme: 'minimal'
-    });
+    // Custom services
+    SummarizeWidget.init({ target: '#demo-custom', theme: 'dark', services: ['chatgpt', 'claude', 'perplexity'] });
 
-    // Demo 4: Compact mode (icons only)
-    SummarizeWidget.init({
-      target: '#demo-compact',
-      compact: true
-    });
-
-    // Demo 5: Custom services
-    SummarizeWidget.init({
-      target: '#demo-custom',
-      services: ['chatgpt', 'claude', 'perplexity']
-    });
-
-    // Demo 6: Content mode
-    SummarizeWidget.init({
-      target: '#demo-content',
-      mode: 'content',
-      preferSelection: true,
-      maxChars: 4000
-    });
-
-    // Demo 7: Custom prompt prefix
-    SummarizeWidget.init({
-      target: '#demo-prompt',
-      promptPrefix: 'As a tech enthusiast, summarize the key insights from:'
-    });
+    // Content mode with selection
+    SummarizeWidget.init({ target: '#demo-content', theme: 'dark', mode: 'content', preferSelection: true });
   </script>
 </body>
 </html>
