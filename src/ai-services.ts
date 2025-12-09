@@ -33,7 +33,9 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
     icon: geminiIcon,
     buildUrl: (prompt, options) => {
       if (options?.geminiStyle === 'search') {
-        return `https://www.google.com/search?q=${encodeURIComponent(prompt)}&udm=50`;
+        // Google search expects + for spaces in query parameters
+        const encoded = encodeURIComponent(prompt).replace(/%20/g, '+');
+        return `https://www.google.com/search?q=${encoded}&udm=50`;
       }
       return `https://gemini.google.com/app?q=${encodeURIComponent(prompt)}`;
     }
