@@ -478,7 +478,7 @@
     <section>
       <h2>Quick Start</h2>
       <p>Drop in a single line of HTML. That's it.</p>
-      <summarize-with-ai theme="dark" services="chatgpt,claude,perplexity" mode="url"></summarize-with-ai>
+      <div id="demo-quickstart" class="demo-widget"></div>
       <div class="code-block">
         <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">theme</span>=<span class="string">"dark"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
       </div>
@@ -769,6 +769,15 @@ SummarizeWidget.init({
         });
       }
     }
+
+    // Quick Start
+    SummarizeWidget.init({ 
+      target: '#demo-quickstart', 
+      theme: 'dark', 
+      services: ['chatgpt', 'claude', 'perplexity'], 
+      mode: 'url',
+      onClickService: trackUsage 
+    });
 
     // Themes
     SummarizeWidget.init({ target: '#demo-light', theme: 'light', onClickService: trackUsage });
