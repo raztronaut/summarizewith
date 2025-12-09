@@ -51,7 +51,7 @@
     /* Navigation */
     nav {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       padding: 2rem 0;
       font-size: 0.875rem;
@@ -234,9 +234,23 @@
       color: var(--accent);
     }
 
-    footer a svg {
-      width: 14px;
-      height: 14px;
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      background: rgba(255, 255, 255, 0.05);
     }
 
     /* Accent link style */
@@ -287,6 +301,130 @@
       color: var(--text);
     }
 
+    /* AI Prompt Box */
+    .ai-prompt-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .ai-prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .ai-prompt-header:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .ai-prompt-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ai-prompt-header-left svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
+    }
+
+    .ai-prompt-header-left span {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .ai-prompt-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ai-prompt-header-right svg {
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    .ai-prompt-box[data-expanded="true"] .ai-prompt-header-right svg {
+      transform: rotate(180deg);
+    }
+
+    .ai-prompt-content {
+      display: none;
+      padding: 0;
+    }
+
+    .ai-prompt-box[data-expanded="true"] .ai-prompt-content {
+      display: block;
+    }
+
+    .ai-prompt-textarea {
+      width: 100%;
+      background: var(--bg-code);
+      border: none;
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      resize: none;
+      min-height: 300px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .ai-prompt-textarea:focus {
+      outline: none;
+    }
+
+    .ai-prompt-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+
+    .ai-prompt-footer span {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+    }
+
+    .ai-prompt-copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .ai-prompt-copy-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .ai-prompt-copy-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
     /* Responsive */
     @media (max-width: 640px) {
       .container {
@@ -312,13 +450,7 @@
 <body>
   <div class="container">
     <nav>
-      <a href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        Go Back
-      </a>
-      <a href="https://github.com" target="_blank" rel="noopener">
+      <a href="https://github.com/raztronaut/summarizewith" target="_blank" rel="noopener">
         GitHub
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -343,6 +475,172 @@
       <summarize-with-ai theme="dark" services="chatgpt,claude,perplexity" mode="url"></summarize-with-ai>
       <div class="code-block">
         <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">theme</span>=<span class="string">"dark"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- AI Integration Prompt -->
+    <section>
+      <h2>AI Integration Prompt</h2>
+      <p>Copy this prompt and paste it into your AI coding assistant (Cursor, Copilot, v0, etc.) to integrate the widget.</p>
+      
+      <div class="ai-prompt-box" data-expanded="false">
+        <div class="ai-prompt-header" onclick="togglePrompt()">
+          <div class="ai-prompt-header-left">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span>Click to expand prompt</span>
+          </div>
+          <div class="ai-prompt-header-right">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <div class="ai-prompt-content">
+          <textarea class="ai-prompt-textarea" id="ai-prompt-text" readonly>You are given a task to integrate the "Summarize With AI" widget into an existing website.
+
+This widget allows users to summarize web pages using AI services like ChatGPT, Claude, Perplexity, Gemini, and Grok.
+
+## Widget Features
+- Zero dependencies - pure vanilla JavaScript
+- 5 AI services: ChatGPT, Claude, Perplexity, Gemini, Grok
+- 3 themes: light, dark, minimal
+- Compact mode (icons only)
+- URL mode (sends page URL) or Content mode (sends page text)
+- Selection-first: can summarize highlighted text
+
+## Installation Options
+
+### Option 1: CDN (Recommended for quick integration)
+
+Add this to your HTML:
+
+&lt;div id="summarize-widget"&gt;&lt;/div&gt;
+&lt;script src="https://unpkg.com/summarize-with-ai/dist/summarize-widget.iife.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  SummarizeWidget.init({
+    target: '#summarize-widget',
+    theme: 'light', // 'light' | 'dark' | 'minimal'
+    mode: 'url',    // 'url' | 'content'
+    services: ['chatgpt', 'claude', 'perplexity', 'gemini', 'grok']
+  });
+&lt;/script&gt;
+
+### Option 2: Web Component (Simplest)
+
+&lt;script src="https://unpkg.com/summarize-with-ai/dist/summarize-widget.iife.js"&gt;&lt;/script&gt;
+&lt;summarize-with-ai 
+  theme="dark" 
+  mode="url"
+  services="chatgpt,claude,perplexity"
+&gt;&lt;/summarize-with-ai&gt;
+
+### Option 3: npm package
+
+npm install summarize-with-ai
+
+Then in your JavaScript/TypeScript:
+
+import { SummarizeWidget } from 'summarize-with-ai';
+
+SummarizeWidget.init({
+  target: '#widget',
+  theme: 'minimal'
+});
+
+## Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| target | string or HTMLElement | Required | CSS selector or element to render into |
+| theme | 'light' | 'dark' | 'minimal' | 'light' | Visual theme |
+| compact | boolean | false | Show icons only (no text labels) |
+| mode | 'url' | 'content' | 'url' | Send page URL or extracted content |
+| services | ServiceId[] | All services | Which AI services to show |
+| preferSelection | boolean | true | Use selected text if available |
+| maxChars | number | 4000 | Max characters for content mode |
+| promptPrefix | string | - | Custom prompt prefix |
+| geminiStyle | 'app' | 'search' | 'app' | Gemini URL style |
+| onClickService | function | - | Callback for analytics |
+
+## CSS Customization
+
+Override these CSS variables to match your site's design:
+
+.summarize-widget {
+  --sw-bg: #ffffff;
+  --sw-border: #e5e7eb;
+  --sw-border-radius: 12px;
+  --sw-padding: 1rem;
+  --sw-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  --sw-font-size: 14px;
+  --sw-text-color: #374151;
+  --sw-button-bg: #f9fafb;
+  --sw-button-hover: #f3f4f6;
+  --sw-button-border: #e5e7eb;
+  --sw-button-radius: 8px;
+}
+
+## Implementation Guidelines
+
+1. Determine the best location for the widget:
+   - Blog posts: After the article content or in a sidebar
+   - Landing pages: In a prominent section
+   - Documentation: In the footer or floating sidebar
+
+2. Choose the appropriate theme:
+   - Use 'light' for light-colored websites
+   - Use 'dark' for dark-themed websites
+   - Use 'minimal' for seamless integration without borders
+
+3. Select the right mode:
+   - Use 'url' mode for public pages that AI can access
+   - Use 'content' mode for protected/private content
+
+4. Consider compact mode for tight spaces like sidebars or mobile views
+
+5. Add analytics tracking if needed:
+   
+   SummarizeWidget.init({
+     target: '#widget',
+     onClickService: (serviceId, context) => {
+       analytics.track('summarize_click', {
+         service: serviceId,
+         mode: context.mode,
+         usedSelection: context.usedSelection
+       });
+     }
+   });
+
+## Questions to Consider
+
+- What theme matches your site's design?
+- Where should the widget be placed for best user experience?
+- Which AI services are most relevant for your audience?
+- Do you need analytics tracking for usage?
+- Should compact mode be used for mobile responsiveness?
+
+## Steps to Integrate
+
+1. Choose installation method (CDN, Web Component, or npm)
+2. Add the HTML container element to your page
+3. Initialize the widget with your preferred options
+4. Customize CSS variables if needed to match your design
+5. Test on different screen sizes and themes
+6. Add analytics callback if tracking is required</textarea>
+          <div class="ai-prompt-footer">
+            <span>Works with Cursor, GitHub Copilot, v0, and other AI assistants</span>
+            <button class="ai-prompt-copy-btn" onclick="copyPrompt()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy Prompt
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -436,13 +734,19 @@ SummarizeWidget.init({
     </section>
 
     <footer>
-      <span>MIT License</span>
-      <a href="https://github.com" target="_blank" rel="noopener">
-        View source
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-        </svg>
-      </a>
+      <span>built by razi</span>
+      <div class="footer-links">
+        <a href="https://github.com/raztronaut" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="https://x.com/raztronaut" target="_blank" rel="noopener" aria-label="X (Twitter)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+      </div>
     </footer>
   </div>
 
@@ -462,6 +766,36 @@ SummarizeWidget.init({
 
     // Content mode with selection
     SummarizeWidget.init({ target: '#demo-content', theme: 'dark', mode: 'content', preferSelection: true });
+
+    // AI Prompt toggle and copy functions
+    function togglePrompt() {
+      const box = document.querySelector('.ai-prompt-box');
+      const isExpanded = box.dataset.expanded === 'true';
+      box.dataset.expanded = isExpanded ? 'false' : 'true';
+      
+      // Update header text
+      const headerText = box.querySelector('.ai-prompt-header-left span');
+      headerText.textContent = isExpanded ? 'Click to expand prompt' : 'Click to collapse';
+    }
+
+    function copyPrompt() {
+      const textarea = document.getElementById('ai-prompt-text');
+      // Decode HTML entities for clipboard
+      const text = textarea.value
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>');
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.ai-prompt-copy-btn');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg> Copied!`;
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

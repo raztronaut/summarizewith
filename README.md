@@ -192,6 +192,149 @@ npm run dev
 npm run typecheck
 ```
 
+## AI Integration Prompt
+
+Use this prompt with your AI coding assistant (Cursor, GitHub Copilot, v0, etc.) to integrate the widget into your website:
+
+<details>
+<summary><strong>📋 Click to expand the AI prompt</strong></summary>
+
+```
+You are given a task to integrate the "Summarize With AI" widget into an existing website.
+
+This widget allows users to summarize web pages using AI services like ChatGPT, Claude, Perplexity, Gemini, and Grok.
+
+## Widget Features
+- Zero dependencies - pure vanilla JavaScript
+- 5 AI services: ChatGPT, Claude, Perplexity, Gemini, Grok
+- 3 themes: light, dark, minimal
+- Compact mode (icons only)
+- URL mode (sends page URL) or Content mode (sends page text)
+- Selection-first: can summarize highlighted text
+
+## Installation Options
+
+### Option 1: CDN (Recommended for quick integration)
+
+Add this to your HTML:
+
+<div id="summarize-widget"></div>
+<script src="https://unpkg.com/summarize-with-ai/dist/summarize-widget.iife.js"></script>
+<script>
+  SummarizeWidget.init({
+    target: '#summarize-widget',
+    theme: 'light', // 'light' | 'dark' | 'minimal'
+    mode: 'url',    // 'url' | 'content'
+    services: ['chatgpt', 'claude', 'perplexity', 'gemini', 'grok']
+  });
+</script>
+
+### Option 2: Web Component (Simplest)
+
+<script src="https://unpkg.com/summarize-with-ai/dist/summarize-widget.iife.js"></script>
+<summarize-with-ai 
+  theme="dark" 
+  mode="url"
+  services="chatgpt,claude,perplexity"
+></summarize-with-ai>
+
+### Option 3: npm package
+
+npm install summarize-with-ai
+
+Then in your JavaScript/TypeScript:
+
+import { SummarizeWidget } from 'summarize-with-ai';
+
+SummarizeWidget.init({
+  target: '#widget',
+  theme: 'minimal'
+});
+
+## Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| target | string or HTMLElement | Required | CSS selector or element to render into |
+| theme | 'light' | 'dark' | 'minimal' | 'light' | Visual theme |
+| compact | boolean | false | Show icons only (no text labels) |
+| mode | 'url' | 'content' | 'url' | Send page URL or extracted content |
+| services | ServiceId[] | All services | Which AI services to show |
+| preferSelection | boolean | true | Use selected text if available |
+| maxChars | number | 4000 | Max characters for content mode |
+| promptPrefix | string | - | Custom prompt prefix |
+| geminiStyle | 'app' | 'search' | 'app' | Gemini URL style |
+| onClickService | function | - | Callback for analytics |
+
+## CSS Customization
+
+Override these CSS variables to match your site's design:
+
+.summarize-widget {
+  --sw-bg: #ffffff;
+  --sw-border: #e5e7eb;
+  --sw-border-radius: 12px;
+  --sw-padding: 1rem;
+  --sw-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  --sw-font-size: 14px;
+  --sw-text-color: #374151;
+  --sw-button-bg: #f9fafb;
+  --sw-button-hover: #f3f4f6;
+  --sw-button-border: #e5e7eb;
+  --sw-button-radius: 8px;
+}
+
+## Implementation Guidelines
+
+1. Determine the best location for the widget:
+   - Blog posts: After the article content or in a sidebar
+   - Landing pages: In a prominent section
+   - Documentation: In the footer or floating sidebar
+
+2. Choose the appropriate theme:
+   - Use 'light' for light-colored websites
+   - Use 'dark' for dark-themed websites
+   - Use 'minimal' for seamless integration without borders
+
+3. Select the right mode:
+   - Use 'url' mode for public pages that AI can access
+   - Use 'content' mode for protected/private content
+
+4. Consider compact mode for tight spaces like sidebars or mobile views
+
+5. Add analytics tracking if needed:
+   
+   SummarizeWidget.init({
+     target: '#widget',
+     onClickService: (serviceId, context) => {
+       analytics.track('summarize_click', {
+         service: serviceId,
+         mode: context.mode,
+         usedSelection: context.usedSelection
+       });
+     }
+   });
+
+## Questions to Consider
+
+- What theme matches your site's design?
+- Where should the widget be placed for best user experience?
+- Which AI services are most relevant for your audience?
+- Do you need analytics tracking for usage?
+- Should compact mode be used for mobile responsiveness?
+
+## Steps to Integrate
+
+1. Choose installation method (CDN, Web Component, or npm)
+2. Add the HTML container element to your page
+3. Initialize the widget with your preferred options
+4. Customize CSS variables if needed to match your design
+5. Test on different screen sizes and themes
+6. Add analytics callback if tracking is required
+```
+
+</details>
+
 ## Inspiration
 
 I was inspired to create this by seeing similar features on these websites:
