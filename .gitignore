@@ -89,3 +89,6 @@ out/
 *.temp
 .tmp/
 .temp/
+
+# Website deployment (moved to separate repo)
+index.html
