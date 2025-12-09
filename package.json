@@ -1,0 +1,41 @@
+{
+  "name": "summarize-with-ai",
+  "version": "1.0.0",
+  "description": "A lightweight, embeddable widget to summarize web pages with AI services",
+  "main": "dist/summarize-widget.iife.js",
+  "module": "dist/summarize-widget.esm.js",
+  "types": "dist/types.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/summarize-widget.esm.js",
+      "require": "./dist/summarize-widget.iife.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "summarize",
+    "chatgpt",
+    "claude",
+    "perplexity",
+    "gemini",
+    "grok",
+    "widget",
+    "web-component"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
+  }
+}
+

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summarize With AI - Demo</title>
+  <style>
+    :root {
+      --page-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #3b82f6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page-bg: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border: #334155;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--page-bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+    }
+
+    .demo-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .demo-section h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .demo-section h2::before {
+      content: '';
+      width: 4px;
+      height: 1.25rem;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .demo-section p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-widget {
+      margin-top: 1rem;
+    }
+
+    .code-block {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+    }
+
+    .code-block code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.8125rem;
+      color: #e2e8f0;
+      white-space: pre;
+    }
+
+    .code-block .comment {
+      color: #64748b;
+    }
+
+    .code-block .tag {
+      color: #f472b6;
+    }
+
+    .code-block .attr {
+      color: #7dd3fc;
+    }
+
+    .code-block .string {
+      color: #86efac;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .tab:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    .tab.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .sample-content {
+      background: var(--page-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sample-content h3 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sample-content p {
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Summarize With AI</h1>
+      <p class="subtitle">A lightweight, embeddable widget for summarizing pages with AI</p>
+    </header>
+
+    <!-- Demo 1: Light Theme (Default) -->
+    <section class="demo-section">
+      <h2>Light Theme (Default)</h2>
+      <p>The default appearance with all AI services. Click any button to summarize this page.</p>
+      <div class="demo-widget" id="demo-light"></div>
+      <div class="code-block">
+        <code><span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="string">"summarize-widget"</span><span class="tag">&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+  SummarizeWidget.init({
+    target: <span class="string">'#summarize-widget'</span>,
+    theme: <span class="string">'light'</span>
+  });
+<span class="tag">&lt;/script&gt;</span></code>
+      </div>
+    </section>
+
+    <!-- Demo 2: Dark Theme -->
+    <section class="demo-section">
+      <h2>Dark Theme</h2>
+      <p>Perfect for dark mode websites. Uses inverted colors for better contrast.</p>
+      <div class="demo-widget" id="demo-dark"></div>
+      <div class="code-block">
+        <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">theme</span>=<span class="string">"dark"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
+      </div>
+    </section>
+
+    <!-- Demo 3: Minimal Theme -->
+    <section class="demo-section">
+      <h2>Minimal Theme</h2>
+      <p>A subtle, borderless design that blends into any page without the header.</p>
+      <div class="demo-widget" id="demo-minimal"></div>
+      <div class="code-block">
+        <code><span class="tag">&lt;summarize-with-ai</span> <span class="attr">theme</span>=<span class="string">"minimal"</span><span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
+      </div>
+    </section>
+
+    <!-- Demo 4: Custom Services -->
+    <section class="demo-section">
+      <h2>Custom Services</h2>
+      <p>Show only specific AI services. Great for keeping things focused.</p>
+      <div class="demo-widget" id="demo-custom"></div>
+      <div class="code-block">
+        <code>SummarizeWidget.init({
+  target: <span class="string">'#widget'</span>,
+  services: [<span class="string">'chatgpt'</span>, <span class="string">'claude'</span>, <span class="string">'perplexity'</span>]
+});</code>
+      </div>
+    </section>
+
+    <!-- Demo 5: Content Mode with Selection -->
+    <section class="demo-section">
+      <h2>Content Mode with Selection</h2>
+      <p>Try selecting some text below, then click a button. The selection will be used for summarization!</p>
+      <div class="sample-content">
+        <h3>Sample Article Content</h3>
+        <p>Artificial intelligence has transformed how we interact with technology. From voice assistants to recommendation systems, AI is now embedded in our daily lives. Machine learning algorithms can analyze vast amounts of data to find patterns that humans might miss. Natural language processing enables computers to understand and generate human language with increasing sophistication. As these technologies continue to evolve, they promise to revolutionize fields from healthcare to education, making previously impossible tasks routine.</p>
+      </div>
+      <div class="demo-widget" id="demo-content"></div>
+      <div class="code-block">
+        <code>SummarizeWidget.init({
+  target: <span class="string">'#widget'</span>,
+  mode: <span class="string">'content'</span>,
+  preferSelection: <span class="string">true</span>,
+  maxChars: <span class="string">4000</span>
+});</code>
+      </div>
+    </section>
+
+    <!-- Demo 6: Custom Prompt Prefix -->
+    <section class="demo-section">
+      <h2>Custom Prompt Prefix</h2>
+      <p>Add context to your summarization requests with a custom prompt prefix.</p>
+      <div class="demo-widget" id="demo-prompt"></div>
+      <div class="code-block">
+        <code>SummarizeWidget.init({
+  target: <span class="string">'#widget'</span>,
+  promptPrefix: <span class="string">'As a tech enthusiast, summarize the key insights from:'</span>
+});</code>
+      </div>
+    </section>
+
+    <!-- Demo 7: Web Component -->
+    <section class="demo-section">
+      <h2>Web Component</h2>
+      <p>Use as a custom HTML element for maximum simplicity.</p>
+      <summarize-with-ai theme="light" services="chatgpt,claude,gemini" mode="url"></summarize-with-ai>
+      <div class="code-block">
+        <code><span class="tag">&lt;summarize-with-ai</span>
+  <span class="attr">theme</span>=<span class="string">"light"</span>
+  <span class="attr">services</span>=<span class="string">"chatgpt,claude,gemini"</span>
+  <span class="attr">mode</span>=<span class="string">"url"</span>
+<span class="tag">&gt;&lt;/summarize-with-ai&gt;</span></code>
+      </div>
+    </section>
+
+    <footer>
+      <p>Built with ❤️ for the AI community</p>
+      <p><a href="https://github.com">View on GitHub</a></p>
+    </footer>
+  </div>
+
+  <!-- Load the widget -->
+  <script src="dist/summarize-widget.iife.js"></script>
+  <script>
+    // Demo 1: Light theme (default)
+    SummarizeWidget.init({
+      target: '#demo-light',
+      theme: 'light'
+    });
+
+    // Demo 2: Dark theme
+    SummarizeWidget.init({
+      target: '#demo-dark',
+      theme: 'dark'
+    });
+
+    // Demo 3: Minimal theme
+    SummarizeWidget.init({
+      target: '#demo-minimal',
+      theme: 'minimal'
+    });
+
+    // Demo 4: Custom services
+    SummarizeWidget.init({
+      target: '#demo-custom',
+      services: ['chatgpt', 'claude', 'perplexity']
+    });
+
+    // Demo 5: Content mode
+    SummarizeWidget.init({
+      target: '#demo-content',
+      mode: 'content',
+      preferSelection: true,
+      maxChars: 4000
+    });
+
+    // Demo 6: Custom prompt prefix
+    SummarizeWidget.init({
+      target: '#demo-prompt',
+      promptPrefix: 'As a tech enthusiast, summarize the key insights from:'
+    });
+  </script>
+</body>
+</html>
+
