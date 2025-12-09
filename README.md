@@ -2,6 +2,12 @@
 
 A lightweight, zero-dependency widget to summarize web pages with AI services like ChatGPT, Claude, Perplexity, Gemini, and Grok.
 
+[![ChatGPT Summary](https://img.shields.io/badge/Summarize_with-ChatGPT-10a37f?logo=openai&logoColor=white)](https://chat.openai.com/?q=Summarize%20this%20GitHub%20repository%3A%20https%3A%2F%2Fgithub.com%2Fraztronaut%2Fsummarizewith)
+[![Claude Summary](https://img.shields.io/badge/Summarize_with-Claude-d97757?logo=anthropic&logoColor=white)](https://claude.ai/new?q=Summarize%20this%20GitHub%20repository%3A%20https%3A%2F%2Fgithub.com%2Fraztronaut%2Fsummarizewith)
+[![Perplexity Summary](https://img.shields.io/badge/Summarize_with-Perplexity-22bfa0?logo=perplexity&logoColor=white)](https://www.perplexity.ai/search/new?q=Summarize%20this%20GitHub%20repository%3A%20https%3A%2F%2Fgithub.com%2Fraztronaut%2Fsummarizewith)
+[![Gemini Summary](https://img.shields.io/badge/Summarize_with-Gemini-8E75B2?logo=googlegemini&logoColor=white)](https://gemini.google.com/app?q=Summarize%20this%20GitHub%20repository%3A%20https%3A%2F%2Fgithub.com%2Fraztronaut%2Fsummarizewith)
+[![Grok Summary](https://img.shields.io/badge/Summarize_with-Grok-000000?logo=x&logoColor=white)](https://x.com/i/grok?text=Summarize%20this%20GitHub%20repository%3A%20https%3A%2F%2Fgithub.com%2Fraztronaut%2Fsummarizewith)
+
 ## Features
 
 - **Zero dependencies** - Pure vanilla JavaScript/TypeScript
