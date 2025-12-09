@@ -29,7 +29,7 @@ function resolveOptions(options: SummarizeWidgetOptions): ResolvedOptions {
     services: options.services ?? DEFAULT_SERVICES,
     theme: options.theme ?? 'light',
     compact: options.compact ?? false,
-    geminiStyle: options.geminiStyle ?? 'app',
+    geminiStyle: options.geminiStyle ?? 'search',
     promptPrefix: options.promptPrefix,
     extractContent: options.extractContent,
     onClickService: options.onClickService,
