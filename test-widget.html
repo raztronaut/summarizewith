@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Verification</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+            background: #888;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .section {
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .light {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .dark {
+            background: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+    <script src="./dist/summarize-widget.iife.js"></script>
+</head>
+
+<body>
+    <h1>Minimal Widget Verification</h1>
+
+    <div id="grid" class="grid-container"></div>
+
+    <script>
+        const colors = [
+            // Standard Grays
+            '#ffffff', '#f8f9fa', '#e9ecef', '#dee2e6', '#ced4da', '#adb5bd', '#6c757d', '#495057', '#343a40', '#212529', '#000000',
+            // Vibrant Colors
+            '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50',
+            // Pastels
+            '#ffcdd2', '#f8bbd0', '#e1bee7', '#d1c4e9', '#c5cae9', '#bbdefb', '#b3e5fc', '#b2ebf2', '#b2dfdb', '#c8e6c9',
+            // Darker Shades
+            '#b71c1c', '#880e4f', '#4a148c', '#311b92', '#1a237e', '#0d47a1', '#01579b', '#006064', '#004d40', '#1b5e20',
+            // Earth Tones
+            '#795548', '#8d6e63', '#a1887f', '#d7ccc8', '#ffcc80', '#ffe0b2', '#fff3e0', '#3e2723', '#5d4037', '#795548'
+        ];
+
+        const grid = document.getElementById('grid');
+
+        colors.forEach(color => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'section';
+            wrapper.style.backgroundColor = color;
+
+            // Simple logic to decide text color for contrast (imitating what a dev might do)
+            // But relying on widget to inherit whatever we set.
+            const r = parseInt(color.slice(1, 3), 16);
+            const g = parseInt(color.slice(3, 5), 16);
+            const b = parseInt(color.slice(5, 7), 16);
+            const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+            const textColor = (yiq >= 128) ? 'black' : 'white';
+
+            wrapper.style.color = textColor;
+            wrapper.innerHTML = `
+                <h3 style="margin:0 0 10px 0; font-size: 14px; opacity: 0.7;">${color}</h3>
+                <summarize-with-ai theme="minimal"></summarize-with-ai>
+            `;
+            grid.appendChild(wrapper);
+        });
+    </script>
+
+    <script>
+        // Mount widgets
+        document.addEventListener('DOMContentLoaded', () => {
+            // The widget auto-mounts if the script is included and the element is present
+        });
+    </script>
+</body>
+
+</html>
