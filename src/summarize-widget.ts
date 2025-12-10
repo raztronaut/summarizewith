@@ -5,6 +5,29 @@ import { injectStyles } from './styles';
 /** Default service order */
 const DEFAULT_SERVICES: ServiceId[] = ['chatgpt', 'perplexity', 'grok', 'gemini', 'claude'];
 
+/** Track if we've already sent a beacon for this page load */
+let hasBeaconed = false;
+
+/**
+ * Send a lightweight beacon to track usage
+ */
+function trackUsage() {
+  if (hasBeaconed) return;
+  hasBeaconed = true;
+
+  try {
+    const beacon = new Image();
+    // Use the absolute URL since this widget is embedded on external sites
+    beacon.src = 'https://summarizewith.vercel.app/api/beacon';
+    // Ensure the image doesn't affect layout if it accidentally renders
+    beacon.style.display = 'none';
+    beacon.style.width = '0';
+    beacon.style.height = '0';
+  } catch (e) {
+    // Silently fail if something goes wrong with tracking
+  }
+}
+
 /**
  * Resolve user options with defaults
  */
@@ -64,15 +87,15 @@ function createButton(service: typeof SERVICES[ServiceId], options: ResolvedOpti
   button.className = 'summarize-widget__button';
   button.setAttribute('aria-label', `Summarize with ${service.name}`);
   button.setAttribute('title', service.name);
-  
+
   button.innerHTML = `
     <span class="summarize-widget__button-icon">${service.icon}</span>
     <span class="summarize-widget__button-text">${service.name}</span>
   `;
-  
+
   button.addEventListener('click', () => {
     const { usedSelection } = openService(service.id, options);
-    
+
     // Call user callback if provided
     if (options.onClickService) {
       options.onClickService(service.id, {
@@ -81,7 +104,7 @@ function createButton(service: typeof SERVICES[ServiceId], options: ResolvedOpti
       });
     }
   });
-  
+
   return button;
 }
 
@@ -90,7 +113,7 @@ function createButton(service: typeof SERVICES[ServiceId], options: ResolvedOpti
  */
 function render(options: ResolvedOptions): HTMLElement {
   const { target, services, theme, compact } = options;
-  
+
   // Create root element
   const root = document.createElement('div');
   root.className = 'summarize-widget';
@@ -99,31 +122,31 @@ function render(options: ResolvedOptions): HTMLElement {
   root.setAttribute('data-sw-root', 'true');
   root.setAttribute('role', 'group');
   root.setAttribute('aria-label', 'Summarize this page with an AI assistant');
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'summarize-widget__container';
-  
+
   // Add header
   container.appendChild(createHeader());
-  
+
   // Create buttons container
   const buttonsContainer = document.createElement('div');
   buttonsContainer.className = 'summarize-widget__buttons';
-  
+
   // Add service buttons
   const serviceConfigs = getServices(services);
   for (const service of serviceConfigs) {
     buttonsContainer.appendChild(createButton(service, options));
   }
-  
+
   container.appendChild(buttonsContainer);
   root.appendChild(container);
-  
+
   // Clear target and append widget
   target.innerHTML = '';
   target.appendChild(root);
-  
+
   return root;
 }
 
@@ -137,29 +160,35 @@ export const SummarizeWidget = {
   init(options: SummarizeWidgetOptions): HTMLElement {
     // Inject styles into document
     injectStyles(document);
-    
+
+    // Track usage
+    trackUsage();
+
     // Resolve options and render
     const resolved = resolveOptions(options);
     return render(resolved);
   },
-  
+
   /**
    * Internal method for web component - renders into a shadow root
    */
   _renderIntoShadow(shadowRoot: ShadowRoot, options: Omit<SummarizeWidgetOptions, 'target'>): HTMLElement {
     // Inject styles into shadow root
     injectStyles(shadowRoot);
-    
+
+    // Track usage
+    trackUsage();
+
     // Create a container element as the target
     const container = document.createElement('div');
     shadowRoot.appendChild(container);
-    
+
     // Resolve options with the container as target
     const resolved = resolveOptions({
       ...options,
       target: container,
     });
-    
+
     return render(resolved);
   },
 };
