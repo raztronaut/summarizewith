@@ -192,6 +192,12 @@ npm run dev
 npm run typecheck
 ```
 
+## Mockup Tools
+
+We provide a standalone **Interactive Mockup Tool** to help you test and visualize the widget on any website before integrating.
+
+👉 **[Get the Mockup Tool](./mockup-tools/README.md)**
+
 ## AI Integration Prompt
 
 Use this prompt with your AI coding assistant (Cursor, GitHub Copilot, v0, etc.) to integrate the widget into your website:
