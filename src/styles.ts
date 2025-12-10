@@ -149,7 +149,10 @@ export const WIDGET_STYLES = `
   /* Key Fix: Inherit color from parent container */
   --sw-text-color: inherit;
   
-  /* Reset visual container styles */
+  /* Header: Inherit opacity/color logic so it matches buttons */
+  --sw-text-secondary: inherit;
+  
+
   --sw-bg: transparent;
   --sw-border: transparent;
   --sw-shadow: none;
@@ -179,8 +182,7 @@ export const WIDGET_STYLES = `
 }
 
 
-  /* Header: Inherit opacity/color logic so it matches buttons */
-  --sw-text-secondary: inherit;
+
 
 
 /* ============================================
