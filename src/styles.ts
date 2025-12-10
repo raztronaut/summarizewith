@@ -13,12 +13,7 @@ export const WIDGET_STYLES = `
   --sw-font-size: 13px;
   --sw-text-color: #374151;
   --sw-text-secondary: #6b7280;
-  
-  /* Premium multi-layer shadow for refined depth */
-  --sw-shadow: 
-    0 1px 2px -1px rgb(0 0 0 / 0.1), 
-    0 1px 3px 0 rgb(0 0 0 / 0.1),
-    0 4px 6px -1px rgb(0 0 0 / 0.05);
+  --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   
   /* Button variables */
   --sw-button-bg: #f9fafb;
@@ -29,10 +24,9 @@ export const WIDGET_STYLES = `
   --sw-button-padding: 0.5rem 0.875rem;
   --sw-button-gap: 0.5rem;
   
-  /* Focus ring (offset style) */
+  /* Focus ring */
   --sw-focus-ring: #3b82f6;
   --sw-focus-ring-offset: 2px;
-  --sw-focus-ring-width: 2px;
   
   /* Layout */
   display: inline-block;
@@ -94,11 +88,7 @@ export const WIDGET_STYLES = `
   font-size: inherit;
   font-weight: 500;
   cursor: pointer;
-  /* Organic "springy" transition */
-  transition: 
-    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
-    border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
-    transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
   text-decoration: none;
   line-height: 1;
   white-space: nowrap;
@@ -115,10 +105,8 @@ export const WIDGET_STYLES = `
 }
 
 .summarize-widget__button:focus-visible {
-  outline: none;
-  box-shadow: 
-    0 0 0 var(--sw-focus-ring-offset) var(--sw-bg), 
-    0 0 0 calc(var(--sw-focus-ring-offset) + var(--sw-focus-ring-width)) var(--sw-focus-ring);
+  outline: 2px solid var(--sw-focus-ring);
+  outline-offset: var(--sw-focus-ring-offset);
 }
 
 .summarize-widget__button-icon {
@@ -151,8 +139,7 @@ export const WIDGET_STYLES = `
   --sw-button-hover: #4b5563;
   --sw-button-active: #6b7280;
   --sw-button-border: #4b5563;
-  /* Softer shadow for dark mode */
-  --sw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -1px rgb(0 0 0 / 0.15);
+  --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
 }
 
 /* ============================================
@@ -179,12 +166,11 @@ export const WIDGET_STYLES = `
   --sw-button-hover: rgba(128, 128, 128, 0.1); 
   --sw-button-active: rgba(128, 128, 128, 0.2);
 
-  /* Modern browsers: Context-aware mix
-     Using color-mix ensures the hover state is visible on both 
-     dark (lightens) and light (darkens) backgrounds automatically. 
-  */
-  --sw-button-hover: color-mix(in srgb, currentColor, transparent 92%);
-  --sw-button-active: color-mix(in srgb, currentColor, transparent 85%);
+  /* Modern browsers: Context-aware mix */
+  @supports (background: color-mix(in srgb, red, blue)) {
+    --sw-button-hover: color-mix(in srgb, currentColor, transparent 92%);
+    --sw-button-active: color-mix(in srgb, currentColor, transparent 85%);
+  }
 }
 
 .summarize-widget[data-theme="minimal"] .summarize-widget__container {
