@@ -4,37 +4,68 @@
  */
 export const WIDGET_STYLES = `
 .summarize-widget {
-  /* Base variables - can be overridden by host */
-  --sw-bg: #ffffff;
-  --sw-border: #e5e7eb;
-  --sw-border-radius: 10px;
-  --sw-padding: 1rem;
+  /* =========================================
+     DEFAULT THEME VARIABLES (Glass / Liquid)
+     ========================================= */
+  
+  /* Background: Adaptive translucent liquid glass */
+  /* Fallback for browsers without backdrop-filter */
+  --sw-bg: rgba(255, 255, 255, 0.95);
+  
+  /* Borders & Shadows */
+  --sw-border: rgba(255, 255, 255, 0.2);
+  --sw-border-radius: 12px;
+  --sw-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+
+  /* Typography: Inherit for adaptive contrast */
   --sw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --sw-font-size: 13px;
-  --sw-text-color: #374151;
-  --sw-text-secondary: #6b7280;
-  --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --sw-text-color: inherit;
+  --sw-text-secondary: inherit;
   
-  /* Button variables */
-  --sw-button-bg: #f9fafb;
-  --sw-button-hover: #f3f4f6;
-  --sw-button-active: #e5e7eb;
-  --sw-button-border: #e5e7eb;
+  /* Button Variables */
+  --sw-button-bg: rgba(255, 255, 255, 0.2);
+  --sw-button-hover: rgba(255, 255, 255, 0.4);
+  --sw-button-active: rgba(255, 255, 255, 0.5);
+  --sw-button-border: rgba(255, 255, 255, 0.1);
   --sw-button-radius: 8px;
   --sw-button-padding: 0.5rem 0.875rem;
   --sw-button-gap: 0.5rem;
   
-  /* Focus ring */
-  --sw-focus-ring: #3b82f6;
+  /* Focus Ring */
+  --sw-focus-ring: rgba(59, 130, 246, 0.5);
   --sw-focus-ring-offset: 2px;
   
   /* Layout */
+  --sw-padding: 1rem;
   display: inline-block;
   font-family: var(--sw-font-family);
   font-size: var(--sw-font-size);
   color: var(--sw-text-color);
   box-sizing: border-box;
   line-height: 1.5;
+}
+
+/* ============================================
+   ADVANCED GLASS SUPPORT
+   ============================================ */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  /* Apply glass effect globally as the default - overrides handle strict themes */
+  .summarize-widget {
+    --sw-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%), rgba(255, 255, 255, 0.1);
+  }
+  
+  .summarize-widget .summarize-widget__container {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  
+  .summarize-widget .summarize-widget__button {
+     backdrop-filter: blur(4px);
+     -webkit-backdrop-filter: blur(4px);
+  }
 }
 
 .summarize-widget *,
@@ -60,6 +91,13 @@ export const WIDGET_STYLES = `
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.02em;
+  opacity: 0.8; /* Slight transparency for hierarchy in adaptive mode */
+}
+
+/* Override opacity for themes that set explicit secondary colors */
+.summarize-widget[data-theme="light"] .summarize-widget__header,
+.summarize-widget[data-theme="dark"] .summarize-widget__header {
+  opacity: 1;
 }
 
 .summarize-widget__header-icon {
@@ -96,7 +134,7 @@ export const WIDGET_STYLES = `
 
 .summarize-widget__button:hover {
   background: var(--sw-button-hover);
-  border-color: #d1d5db;
+  border-color: rgba(255,255,255, 0.4);
 }
 
 .summarize-widget__button:active {
@@ -128,48 +166,70 @@ export const WIDGET_STYLES = `
 }
 
 /* ============================================
-   DARK THEME
+   LIGHT THEME OVERRIDE
+   ============================================ */
+.summarize-widget[data-theme="light"] {
+  --sw-bg: #ffffff;
+  --sw-border: #e5e7eb;
+  --sw-text-color: #374151;
+  --sw-text-secondary: #6b7280;
+  --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  
+  --sw-button-bg: #f9fafb;
+  --sw-button-hover: #f3f4f6;
+  --sw-button-active: #e5e7eb;
+  --sw-button-border: #e5e7eb;
+  
+  --sw-focus-ring: #3b82f6;
+}
+
+.summarize-widget[data-theme="light"] .summarize-widget__container,
+.summarize-widget[data-theme="light"] .summarize-widget__button {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ============================================
+   DARK THEME OVERRIDE
    ============================================ */
 .summarize-widget[data-theme="dark"] {
   --sw-bg: #1f2937;
   --sw-border: #374151;
   --sw-text-color: #f9fafb;
   --sw-text-secondary: #9ca3af;
+  --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+  
   --sw-button-bg: #374151;
   --sw-button-hover: #4b5563;
   --sw-button-active: #6b7280;
   --sw-button-border: #4b5563;
-  --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+}
+
+.summarize-widget[data-theme="dark"] .summarize-widget__container,
+.summarize-widget[data-theme="dark"] .summarize-widget__button {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 /* ============================================
-   MINIMAL THEME
+   MINIMAL THEME OVERRIDE
    ============================================ */
 .summarize-widget[data-theme="minimal"] {
-  /* Key Fix: Inherit color from parent container */
   --sw-text-color: inherit;
-  
-  /* Header: Inherit opacity/color logic so it matches buttons */
   --sw-text-secondary: inherit;
   
-
   --sw-bg: transparent;
   --sw-border: transparent;
   --sw-shadow: none;
   --sw-padding: 0;
   
-  /* Button Styles */
   --sw-button-bg: transparent;
   --sw-button-border: transparent;
-  --sw-button-gap: 0.5rem;
-
-  /* Dynamic Interaction States */
   
-  /* Fallback for older browsers: simple opacity change */
+  /* Modern browsers: Context-aware mix */
   --sw-button-hover: rgba(128, 128, 128, 0.1); 
   --sw-button-active: rgba(128, 128, 128, 0.2);
 
-  /* Modern browsers: Context-aware mix */
   @supports (background: color-mix(in srgb, red, blue)) {
     --sw-button-hover: color-mix(in srgb, currentColor, transparent 92%);
     --sw-button-active: color-mix(in srgb, currentColor, transparent 85%);
@@ -180,10 +240,6 @@ export const WIDGET_STYLES = `
   border: none;
   box-shadow: none;
 }
-
-
-
-
 
 /* ============================================
    COMPACT MODE (Icons Only)
@@ -213,9 +269,7 @@ export const WIDGET_STYLES = `
   display: none;
 }
 
-/* ============================================
-   COMPACT + MINIMAL
-   ============================================ */
+/* Compact + Minimal */
 .summarize-widget[data-theme="minimal"][data-compact="true"] .summarize-widget__container {
   padding: 0;
 }
@@ -224,16 +278,13 @@ export const WIDGET_STYLES = `
   gap: 0.25rem;
 }
 
-/* ============================================
-   COMPACT + DARK
-   ============================================ */
-.summarize-widget[data-theme="dark"][data-compact="true"] .summarize-widget__button {
+/* Compact + Dark/Light Button Borders */
+.summarize-widget[data-theme="dark"][data-compact="true"] .summarize-widget__button,
+.summarize-widget[data-theme="light"][data-compact="true"] .summarize-widget__button {
   border-color: var(--sw-button-border);
 }
 
-/* ============================================
-   RESPONSIVE / MOBILE
-   ============================================ */
+/* Responsive */
 @media (max-width: 480px) {
   .summarize-widget:not([data-compact="true"]) .summarize-widget__buttons {
     flex-direction: column;
@@ -248,21 +299,12 @@ export const WIDGET_STYLES = `
 /**
  * Inject styles into a target (document head or shadow root)
  */
-export function injectStyles(target: Document | ShadowRoot): void {
-  const styleId = 'summarize-widget-styles';
-
-  // For document, check if already injected
+export function injectStyles(target: Node) {
+  const style = document.createElement('style');
+  style.textContent = WIDGET_STYLES;
   if (target instanceof Document) {
-    if (target.getElementById(styleId)) return;
-
-    const style = target.createElement('style');
-    style.id = styleId;
-    style.textContent = WIDGET_STYLES;
     target.head.appendChild(style);
   } else {
-    // For shadow root
-    const style = document.createElement('style');
-    style.textContent = WIDGET_STYLES;
     target.appendChild(style);
   }
 }

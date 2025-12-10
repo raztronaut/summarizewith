@@ -10,38 +10,27 @@ A lightweight, zero-dependency widget to summarize web pages with AI services li
 
 ## Features
 
-- **Zero dependencies** - Pure vanilla JavaScript/TypeScript
-- **Multiple distribution formats** - Script tag, Web Component, or npm package
-- **5 AI services** - ChatGPT, Claude, Perplexity, Gemini, Grok
-- **3 themes** - Light, Dark, Minimal
-- **Compact mode** - Icons-only display for tight spaces
-- **Smart content handling** - URL mode, content mode, selection-first
-- **Fully accessible** - Semantic HTML, ARIA labels, keyboard navigation
-- **Customizable** - CSS variables, custom prompts, service selection
+-   **Zero Dependencies**: Just a single JS file.
+-   **Liquid Glass Design**: Beautiful, adaptive frosted glass theme out of the box.
+-   **Multiple Themes**: Explicit `light`, `dark`, and `minimal` overrides available.
+-   **Universal Support**: Works with vanilla HTML/JS, React, Vue, Svelte, etc.
+-   **Smart Context**: Automatically selects page content or explicit text.
+-   **Customizable**: Configure services, prompt prefixes, and compact modes.
 
 ## Installation
 
-### Script Tag (CDN)
+### Method 1: CDN (Easiest)
+
+Add this script tag to your HTML:
 
 ```html
-<div id="summarize-widget"></div>
-<script src="https://unpkg.com/summarize-with-ai/dist/summarize-widget.iife.js"></script>
-<script>
-  SummarizeWidget.init({
-    target: '#summarize-widget',
-    theme: 'light'
-  });
-</script>
+<script src="https://unpkg.com/summarize-with-ai@latest/dist/summarize-widget.iife.js" defer></script>
+
+<!-- The widget will render with the default Glass theme -->
+<summarize-with-ai></summarize-with-ai>
 ```
 
-### Web Component
-
-```html
-<script src="https://unpkg.com/summarize-with-ai/dist/summarize-widget.iife.js"></script>
-<summarize-with-ai theme="dark" mode="url"></summarize-with-ai>
-```
-
-### npm
+### Method 2: npm
 
 ```bash
 npm install summarize-with-ai

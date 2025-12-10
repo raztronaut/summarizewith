@@ -36,7 +36,7 @@ export interface SummarizeWidgetOptions {
   /** Which AI services to show (default: all) */
   services?: ServiceId[];
   /** Visual theme (default: 'light') */
-  theme?: 'light' | 'dark' | 'minimal';
+  theme?: 'default' | 'light' | 'dark' | 'minimal' | 'glass';
   /** If true, show only icons without text labels (default: false) */
   compact?: boolean;
   /** Custom prompt prefix, e.g. "As a health conscious individual..." */

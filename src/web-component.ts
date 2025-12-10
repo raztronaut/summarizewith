@@ -11,7 +11,7 @@ const VALID_SERVICES: ServiceId[] = ['chatgpt', 'claude', 'perplexity', 'gemini'
  */
 function parseServices(value: string | null): ServiceId[] | undefined {
   if (!value) return undefined;
-  
+
   return value
     .split(',')
     .map(s => s.trim().toLowerCase())
@@ -21,9 +21,11 @@ function parseServices(value: string | null): ServiceId[] | undefined {
 /**
  * Parse theme attribute
  */
-function parseTheme(value: string | null): 'light' | 'dark' | 'minimal' | undefined {
-  if (value === 'light' || value === 'dark' || value === 'minimal') {
-    return value;
+const VALID_THEMES = ['default', 'light', 'dark', 'minimal', 'glass'] as const;
+
+function parseTheme(value: string | null): typeof VALID_THEMES[number] | undefined {
+  if (value && VALID_THEMES.includes(value as any)) {
+    return value as typeof VALID_THEMES[number];
   }
   return undefined;
 }
@@ -140,13 +142,13 @@ export class SummarizeWithAIElement extends HTMLElement {
   private _render(): void {
     // Clear previous content
     this._shadowRoot.innerHTML = '';
-    
+
     // Get options from attributes
     const options = this._getOptions();
-    
+
     // Render widget into shadow root
     SummarizeWidget._renderIntoShadow(this._shadowRoot, options);
-    
+
     this._rendered = true;
   }
 

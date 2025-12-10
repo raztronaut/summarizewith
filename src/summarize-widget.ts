@@ -79,7 +79,7 @@ function resolveOptions(options: SummarizeWidgetOptions): ResolvedOptions {
     preferSelection: options.preferSelection ?? true,
     maxChars: options.maxChars ?? 4000,
     services: options.services ?? DEFAULT_SERVICES,
-    theme: options.theme ?? 'light',
+    theme: options.theme ?? 'default',
     compact: options.compact ?? false,
     geminiStyle: options.geminiStyle ?? 'search',
     promptPrefix: options.promptPrefix,
