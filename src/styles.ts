@@ -178,9 +178,10 @@ export const WIDGET_STYLES = `
   box-shadow: none;
 }
 
-.summarize-widget[data-theme="minimal"] .summarize-widget__header {
-  display: none;
-}
+
+  /* Header: Inherit opacity/color logic so it matches buttons */
+  --sw-text-secondary: inherit;
+
 
 /* ============================================
    COMPACT MODE (Icons Only)
