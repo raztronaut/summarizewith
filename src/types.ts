@@ -43,6 +43,8 @@ export interface SummarizeWidgetOptions {
   promptPrefix?: string;
   /** Gemini URL style: 'app' for gemini.google.com, 'search' for google.com/search with AI */
   geminiStyle?: 'app' | 'search';
+  /** Layout mode: 'auto' (default, uses container queries), 'horizontal' (always inline), 'vertical' (always stacked) */
+  layout?: 'auto' | 'horizontal' | 'vertical';
   /** Custom content extraction function */
   extractContent?: () => string;
   /** Callback when a service button is clicked */
@@ -52,9 +54,10 @@ export interface SummarizeWidgetOptions {
 /**
  * Internal resolved options with defaults applied
  */
-export interface ResolvedOptions extends Required<Omit<SummarizeWidgetOptions, 'target' | 'extractContent' | 'onClickService' | 'promptPrefix' | 'compact'>> {
+export interface ResolvedOptions extends Required<Omit<SummarizeWidgetOptions, 'target' | 'extractContent' | 'onClickService' | 'promptPrefix' | 'compact' | 'layout'>> {
   target: HTMLElement;
   compact: boolean;
+  layout: 'auto' | 'horizontal' | 'vertical';
   extractContent?: () => string;
   onClickService?: (serviceId: ServiceId, context: ClickContext) => void;
   promptPrefix?: string;

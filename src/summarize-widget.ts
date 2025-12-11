@@ -4,7 +4,7 @@ import { injectStyles } from './styles';
 
 /** Default service order */
 const DEFAULT_SERVICES: ServiceId[] = ['chatgpt', 'perplexity', 'grok', 'gemini', 'claude'];
-const VERSION = '1.0.9';
+const VERSION = '1.1.0';
 
 /** Capture load time as early as possible */
 const LOAD_TIME = Date.now();
@@ -81,6 +81,7 @@ function resolveOptions(options: SummarizeWidgetOptions): ResolvedOptions {
     services: options.services ?? DEFAULT_SERVICES,
     theme: options.theme ?? 'default',
     compact: options.compact ?? false,
+    layout: options.layout ?? 'auto',
     geminiStyle: options.geminiStyle ?? 'search',
     promptPrefix: options.promptPrefix,
     extractContent: options.extractContent,
@@ -141,13 +142,16 @@ function createButton(service: typeof SERVICES[ServiceId], options: ResolvedOpti
  * Render the widget into the target element
  */
 function render(options: ResolvedOptions): HTMLElement {
-  const { target, services, theme, compact } = options;
+  const { target, services, theme, compact, layout } = options;
 
   // Create root element
   const root = document.createElement('div');
   root.className = 'summarize-widget';
   root.setAttribute('data-theme', theme);
   root.setAttribute('data-compact', String(compact));
+  if (layout !== 'auto') {
+    root.setAttribute('data-layout', layout);
+  }
   root.setAttribute('data-sw-root', 'true');
   root.setAttribute('role', 'group');
   root.setAttribute('aria-label', 'Summarize this page with an AI assistant');

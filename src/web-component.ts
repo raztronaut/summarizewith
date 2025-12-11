@@ -51,6 +51,18 @@ function parseGeminiStyle(value: string | null): 'app' | 'search' | undefined {
 }
 
 /**
+ * Parse layout attribute
+ */
+const VALID_LAYOUTS = ['auto', 'horizontal', 'vertical'] as const;
+
+function parseLayout(value: string | null): typeof VALID_LAYOUTS[number] | undefined {
+  if (value && VALID_LAYOUTS.includes(value as any)) {
+    return value as typeof VALID_LAYOUTS[number];
+  }
+  return undefined;
+}
+
+/**
  * Web Component wrapper for SummarizeWidget
  * 
  * Usage:
@@ -62,6 +74,7 @@ function parseGeminiStyle(value: string | null): 'app' | 'search' | undefined {
  *   max-chars="4000"
  *   prompt-prefix="As a developer..."
  *   gemini-style="app"
+ *   layout="horizontal"
  *   compact
  * ></summarize-with-ai>
  */
@@ -70,7 +83,7 @@ export class SummarizeWithAIElement extends HTMLElement {
   private _rendered = false;
 
   static get observedAttributes(): string[] {
-    return ['theme', 'mode', 'services', 'prefer-selection', 'max-chars', 'prompt-prefix', 'gemini-style', 'compact'];
+    return ['theme', 'mode', 'services', 'prefer-selection', 'max-chars', 'prompt-prefix', 'gemini-style', 'compact', 'layout'];
   }
 
   constructor() {
@@ -132,6 +145,10 @@ export class SummarizeWithAIElement extends HTMLElement {
     // Compact is a boolean attribute - presence means true
     const compact = this.hasAttribute('compact');
     if (compact) options.compact = true;
+
+    // Layout attribute - 'auto', 'horizontal', or 'vertical'
+    const layout = parseLayout(this.getAttribute('layout'));
+    if (layout) options.layout = layout;
 
     return options;
   }
