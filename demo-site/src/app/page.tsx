@@ -17,7 +17,7 @@ export default function Home() {
         <script src="http://localhost:8080/dist/summarize-widget.iife.js" defer></script>
         <summarize-with-ai
           theme="default"
-          services="chatgpt,gemini,claude"
+          services="chatgpt,gemini,claude,perplexity"
         ></summarize-with-ai>
       </Hero>
     </div>

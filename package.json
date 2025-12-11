@@ -1,6 +1,6 @@
 {
   "name": "summarize-with-ai",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A lightweight, embeddable widget to summarize web pages with AI services",
   "main": "dist/summarize-widget.iife.js",
   "module": "dist/summarize-widget.esm.js",

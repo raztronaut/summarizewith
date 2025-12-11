@@ -24,6 +24,9 @@ export const WIDGET_STYLES = `
   --sw-font-size: 13px;
   --sw-text-color: inherit;
   --sw-text-secondary: inherit;
+
+  /* Brand Colors */
+  --sw-perplexity-color: #20808d;
   
   /* Button Variables */
   --sw-button-bg: rgba(255, 255, 255, 0.2);
@@ -199,10 +202,12 @@ export const WIDGET_STYLES = `
   --sw-text-secondary: #9ca3af;
   --sw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
   
-  --sw-button-bg: #374151;
   --sw-button-hover: #4b5563;
   --sw-button-active: #6b7280;
   --sw-button-border: #4b5563;
+
+  /* Lighter teal for dark mode contrast */
+  --sw-perplexity-color: #1fb8cd;
 }
 
 .summarize-widget[data-theme="dark"] .summarize-widget__container,

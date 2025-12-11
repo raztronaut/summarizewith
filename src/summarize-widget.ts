@@ -4,7 +4,7 @@ import { injectStyles } from './styles';
 
 /** Default service order */
 const DEFAULT_SERVICES: ServiceId[] = ['chatgpt', 'perplexity', 'grok', 'gemini', 'claude'];
-const VERSION = '1.0.6';
+const VERSION = '1.0.9';
 
 /** Capture load time as early as possible */
 const LOAD_TIME = Date.now();
